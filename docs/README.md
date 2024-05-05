@@ -4,22 +4,27 @@
 
 To get started with this npm package template, follow these steps:
 
-1. Clone the repository to your local machine.
-2. Navigate to the project directory.
-4. In your `package.json`, use VSCode Find and Replace feature to change all instances of 
+
+1. To ensure that TypeScript automatically appends the `.js` extension, add the following line to your `settings.json` file
+	```json
+   	"typescript.preferences.importModuleSpecifierEnding": "js",
+ 	```
+3. Clone the repository to your local machine.
+4. Navigate to the project directory.
+5. In your `package.json`, use VSCode Find and Replace feature to change all instances of 
 	- `mypackage` to your own package name
 	- `yemreak` to your own author name
 	- ![alt text](assets/SCR-20240427-qoxk.png)
-5. Delete `docs` directory
-6. Install the dependencies by running the following command:
+6. Delete `docs` directory
+7. Install the dependencies by running the following command:
 	```zsh
 	npm install
 	```
-7. To add a new user to npm registry, run:
+8. To add a new user to npm registry, run:
 	```zsh
 	npm adduser
 	```
-8. To publish the package to the **public** npm registry, run:
+9. To publish the package to the **public** npm registry, run:
 	```zsh
 	npm publish --access public
 	```
