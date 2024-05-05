@@ -1,29 +1,56 @@
 {
-	"name": "@yemreak/mypackage",
+	"name": "@yemreak/aws-s3",
 	"version": "1.0.0",
-	"description": "mypackage app with typescript",
+	"description": "aws-s3 app with typescript",
 	"main": "src/index.ts",
 	"type": "module",
 	"scripts": {
 		"start": "tsc --project tsconfig.json && node out/app.js",
 		"build": "tsc --project tsconfig.json",
-		"publish": "npm publish --access public"
+		"publish": "npm publish --access public",
+		"test": "node --experimental-vm-modules ./node_modules/.bin/jest"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/yemreak/mypackage.git"
+		"url": "git+https://github.com/yemreak/aws-s3.git"
+	},
+	"jest": {
+		"preset": "ts-jest",
+		"testEnvironment": "node",
+		"silent": true,
+		"extensionsToTreatAsEsm": [
+			".ts"
+		],
+		"moduleNameMapper": {
+			"^(\\.{1,2}/.*)\\.js$": "$1"
+		},
+		"transform": {
+			"^.+\\.ts$": [
+				"ts-jest",
+				{
+					"useESM": true
+				}
+			]
+		}
 	},
 	"keywords": [],
 	"author": "yemreak",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/yemreak/mypackage/issues"
+		"url": "https://github.com/yemreak/aws-s3/issues"
 	},
-	"homepage": "https://github.com/yemreak/mypackage#readme",
+	"homepage": "https://github.com/yemreak/aws-s3#readme",
 	"devDependencies": {
 		"@types/jest": "^29.5.12",
+		"@types/js-yaml": "^4.0.9",
+		"@types/mime-types": "^2.1.4",
 		"jest": "^29.7.0",
+		"js-yaml": "^4.1.0",
 		"ts-jest": "^29.1.2",
 		"typescript": "^5.4.5"
+	},
+	"dependencies": {
+		"@aws-sdk/client-s3": "^3.569.0",
+		"mime-types": "^2.1.35"
 	}
 }
