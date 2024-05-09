@@ -1,17 +1,24 @@
 {
 	"name": "@yemreak/aws-s3",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "aws-s3 app with typescript",
-	"main": "src/index.ts",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"type": "module",
 	"scripts": {
-		"start": "tsc --project tsconfig.json && node out/app.js",
+		"start": "tsc --project tsconfig.json && node dist/app.js",
 		"build": "tsc --project tsconfig.json",
 		"test": "node --experimental-vm-modules ./node_modules/.bin/jest"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/yemreak/aws-s3.git"
+	},
+	"files": [
+		"dist/**/*"
+	],
+	"publishConfig": {
+		"access": "public"
 	},
 	"jest": {
 		"preset": "ts-jest",

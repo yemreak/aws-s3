@@ -17,7 +17,7 @@ describe("S3Client", () => {
 
 	describe("put", () => {
 		it("should upload a file to S3", async () => {
-			const response = await s3Client.put({
+			const response = await s3Client.uploadFile({
 				filepath: "tsconfig.json",
 				isPublic: true,
 			})

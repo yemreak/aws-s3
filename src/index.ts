@@ -1,39 +1,31 @@
-import {
-	PutObjectCommand,
-	S3Client as _S3Client,
-	type S3ClientConfig,
-} from "@aws-sdk/client-s3"
+import { PutObjectCommand, S3Client as _S3Client } from "@aws-sdk/client-s3"
 import fs from "fs"
 import mime from "mime-types"
-export { type S3ClientConfig }
 
+export type S3ClientConfig = {
+	bucketName: string
+	region: string
+	credentials: { accessKeyId: string; secretAccessKey: string }
+}
 export class S3Client {
 	private readonly client: _S3Client
-	readonly bucketName: string
-	readonly region: string
 
-	constructor(init: {
-		bucketName: string
-		region: string
-		credentials: S3ClientConfig["credentials"]
-	}) {
-		this.bucketName = init.bucketName
-		this.region = init.region
-
-		this.client = new _S3Client({ ...init })
+	constructor(readonly config: S3ClientConfig) {
+		this.client = new _S3Client({ ...config })
 	}
 
-	async put(params: { filepath: string; isPublic: boolean }) {
-		const { filepath, isPublic = false } = params
-
-		const file = fs.readFileSync(filepath)
-		const filename = filepath.split("/").pop()!
-		const mimeType = mime.lookup(filepath) || "application/octet-stream"
+	async uploadBuffer(params: {
+		buffer: Buffer
+		isPublic: boolean
+		filename: string
+	}) {
+		const { buffer, isPublic, filename } = params
+		const mimeType = mime.lookup(filename) || "application/octet-stream"
 		const key = `${Date.now()}_${filename}`
 		const command = new PutObjectCommand({
-			Bucket: this.bucketName,
+			Bucket: this.config.bucketName,
 			Key: key,
-			Body: file,
+			Body: buffer,
 			ContentType: mimeType,
 			ACL: isPublic ? "public-read" : "private",
 		})
@@ -46,7 +38,20 @@ export class S3Client {
 		return this.constructUrl(key)
 	}
 
+	async uploadFile(params: { filepath: string; isPublic: boolean }) {
+		const { filepath, isPublic } = params
+		const buffer = fs.readFileSync(filepath)
+		const filename = filepath.split("/").pop()!
+		return this.uploadBuffer({ buffer, isPublic, filename })
+	}
+
+	/**
+	 * Constructs a URL for the given filename, ensuring proper encoding.
+	 * @param {string} filename - The filename to encode in the URL.
+	 * @returns {string} - The fully constructed and encoded URL.
+	 */
 	constructUrl(filename: string): string {
-		return `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${filename}`
+		const encodedFilename = encodeURIComponent(filename)
+		return `https://${this.config.bucketName}.s3.${this.config.region}.amazonaws.com/${encodedFilename}`
 	}
 }
