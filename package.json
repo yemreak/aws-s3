@@ -1,6 +1,6 @@
 {
 	"name": "@yemreak/aws-s3",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "aws-s3 app with typescript",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -8,7 +8,8 @@
 	"scripts": {
 		"start": "tsc --project tsconfig.json && node dist/app.js",
 		"build": "tsc --project tsconfig.json",
-		"test": "node --experimental-vm-modules ./node_modules/.bin/jest"
+		"test": "node --experimental-vm-modules ./node_modules/.bin/jest",
+		"prepublishOnly": "npm run build"
 	},
 	"repository": {
 		"type": "git",

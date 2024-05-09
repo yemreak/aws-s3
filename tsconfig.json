@@ -2,10 +2,11 @@
 	"compilerOptions": {
 		"target": "ESNext",
 		"module": "ESNext",
-		"outDir": "./out",
+		"outDir": "./dist",
 		"rootDir": "./src",
 		"moduleResolution": "Bundler",
 		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
 		"skipLibCheck": true,
